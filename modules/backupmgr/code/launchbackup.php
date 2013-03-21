@@ -10,7 +10,7 @@ include('../../../dryden/ctrl/users.class.php');
 include('../../../dryden/fs/director.class.php');
 include('../../../inc/dbc.inc.php');
 try {
-    $zdbh = new db_driver("mysql:host=localhost;dbname=" . $dbname . "", $user, $pass);
+    $zdbh = new db_driver("mysql:host=" . $host . ";dbname=" . $dbname . "", $user, $pass);
 } catch (PDOException $e) {
     exit();
 }
@@ -55,7 +55,7 @@ if ($_SESSION['zpuid'] == $userid) {
             </div>
         </body>
     </html>
-    <?php } else {
+<?php } else {
     ?>
     <body style="background: #F3F3F3;">
         <h2>Unauthorized Access!</h2>

@@ -17,17 +17,14 @@ class ui_tpl_progbardisk {
         $currentuser = ctrl_users::GetUserDetail();
         $diskquota = $currentuser['diskquota'];
         $diskspace = ctrl_users::GetQuotaUsages('diskspace', $currentuser['userid']);
-        if (!fs_director::CheckForEmptyValue($diskspace)) {
-            $per = ($diskspace / $diskquota) * 100;
-            $percent = round($per, 0);
-            $line = "<img src=\"etc/lib/pChart2/zpanel/zProgress.php?percent=" . $percent . "\"/>";
+        if ($diskquota == 0) {
+            return '<img src="etc/lib/pChart2/zpanel/zProgress.php?percent=0"/>';
         } else {
-            $line = "<img src=\"etc/lib/pChart2/zpanel/zProgress.php?percent=0\"/>";
+            if (fs_director::CheckForEmptyValue($diskspace))
+                $diskspace = 0;
+            $percent = round(($diskspace / $diskquota) * 100, 0);
+            return "<img src=\"etc/lib/pChart2/zpanel/zProgress.php?percent=" . $percent . "\"/>";
         }
-        if ($diskspace == $diskquota) {
-            $line = "<img src=\"etc/lib/pChart2/zpanel/zProgress.php?percent=100\"/>";
-        }
-        return $line;
     }
 
 }
